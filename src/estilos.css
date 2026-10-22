@@ -274,7 +274,6 @@ a {
   margin-bottom: clamp(2rem, 5vw, 3.5rem);
 }
 .seccion__cabeza h2,
-.caso h2,
 .contacto h2 {
   font-size: clamp(2.2rem, 5vw, 3.4rem);
   font-weight: 800;
@@ -356,6 +355,19 @@ a {
   border-radius: 50%;
   background: #2e9b62;
   vertical-align: 0.1em;
+}
+/* Software privado: sin punto verde de "en línea" */
+.ventana__url[data-privado]::before {
+  background: var(--gris);
+}
+.proyecto__privado {
+  margin-top: 0.5rem;
+  color: var(--gris);
+  font-size: 0.95rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--vino);
+  background: var(--superficie);
+  border-radius: 0 8px 8px 0;
 }
 .ventana img {
   width: 100%;
@@ -477,54 +489,6 @@ a {
   padding-top: 0.5rem;
 }
 
-/* Caso REG */
-.caso {
-  background: var(--tinta);
-  color: #fff;
-  padding-block: clamp(3.5rem, 8vw, 6rem);
-}
-.caso__dentro {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(2rem, 5vw, 4rem);
-  align-items: start;
-}
-.caso__empresa {
-  color: #e7a9b1;
-  font-weight: 600;
-  margin-bottom: 0.75rem;
-}
-.caso__intro {
-  margin-top: 1rem;
-  color: #c9d1de;
-  font-size: 1.125rem;
-  max-width: 52ch;
-}
-.chips--claro li {
-  background: transparent;
-  border-color: rgb(255 255 255 / 0.25);
-  color: #fff;
-}
-.caso__lista {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 1rem;
-}
-.caso__lista li {
-  padding: 1.1rem 1.25rem;
-  border-radius: 12px;
-  background: rgb(255 255 255 / 0.06);
-  border-left: 3px solid #c25866;
-  color: #e6ebf2;
-}
-@media (max-width: 860px) {
-  .caso__dentro {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* Experiencia */
 .linea {
   list-style: none;
@@ -595,25 +559,117 @@ a {
 }
 
 /* Habilidades */
-.habilidades {
+/* Compromiso: tres frases cortas sobre cómo trabajo, justo después de la portada */
+.compromiso {
+  background: var(--tinta);
+  color: #fff;
+  padding-block: clamp(3rem, 7vw, 5rem);
+}
+.compromiso__dentro {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 2rem;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 2.2fr);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: start;
 }
-.habilidad h3 {
-  font-size: 1.15rem;
-  font-weight: 700;
-  padding-bottom: 0.6rem;
-  border-bottom: 2px solid var(--tinta);
+.compromiso h2 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
 }
-.habilidad ul {
+.compromiso ul {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 2.5rem);
 }
-.habilidad li {
-  padding: 0.55rem 0;
-  border-bottom: 1px solid var(--linea);
+.compromiso h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.7rem;
+  border-bottom: 2px solid #e8a3ad;
+}
+.compromiso p {
+  color: rgb(255 255 255 / 0.78);
+  font-size: 0.98rem;
+}
+@media (max-width: 900px) {
+  .compromiso__dentro,
+  .compromiso ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Con qué trabajo: cada tecnología con su logo */
+.tecnologias {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem clamp(2rem, 5vw, 4rem);
+}
+@media (max-width: 760px) {
+  .tecnologias {
+    grid-template-columns: 1fr;
+  }
+}
+.tecnologias__grupo h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.9rem;
+  border-bottom: 2px solid var(--tinta);
+}
+.tecnologias__grupo ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+@media (max-width: 480px) {
+  .tecnologias__grupo ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.tec {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.7rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+.tec svg {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+.tec svg[data-oscuro] {
+  color: var(--tinta) !important;
+}
+/* Soporte técnico no tiene logos: va a lo ancho, como etiquetas. */
+.tecnologias__grupo--ancho {
+  grid-column: 1 / -1;
+}
+.tecnologias__texto {
+  display: flex !important;
+  flex-wrap: wrap;
+}
+.tecnologias__texto li {
+  padding: 0.55rem 0.9rem;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
 /* Contacto */
@@ -669,4 +725,87 @@ a {
   padding-block: 2rem;
   color: var(--gris);
   font-size: 0.95rem;
+}
+
+/* Punticos a la derecha para saltar entre secciones */
+.puntos {
+  position: fixed;
+  right: clamp(8px, 1.6vw, 24px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 6;
+}
+.puntos ul {
+  list-style: none;
+  margin: 0;
+  padding: 0.6rem 0.45rem;
+  display: grid;
+  gap: 0.35rem;
+  border-radius: 999px;
+  background: rgb(242 244 247 / 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--linea);
+}
+.puntos a {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+}
+.puntos a::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gris);
+  opacity: 0.45;
+  transition: transform 0.2s, opacity 0.2s, background 0.2s;
+}
+.puntos a:hover::before,
+.puntos a:focus-visible::before {
+  opacity: 1;
+}
+.puntos a[aria-current="true"]::before {
+  background: var(--vino);
+  opacity: 1;
+  transform: scale(1.45);
+}
+.puntos__nombre {
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  background: var(--tinta);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+.puntos a:hover .puntos__nombre,
+.puntos a:focus-visible .puntos__nombre {
+  opacity: 1;
+}
+@media (max-width: 600px) {
+  .puntos {
+    right: 3px;
+  }
+  .puntos ul {
+    padding: 0.45rem 0.3rem;
+    gap: 0.2rem;
+  }
+  .puntos a {
+    width: 18px;
+    height: 18px;
+  }
+  .puntos a::before {
+    width: 6px;
+    height: 6px;
+  }
 }

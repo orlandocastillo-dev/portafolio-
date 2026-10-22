@@ -1,4 +1,17 @@
-import { casoReal, educacion, experiencia, habilidades, otros, persona, proyectos, type Proyecto } from "./datos";
+import { useEffect, useState } from "react";
+import {
+  siCss, siGit, siGithub, siGithubactions, siHtml5, siJavascript, siNextdotjs, siNodedotjs, siPostgresql, siPwa, siPython,
+  siReact, siRedux, siSupabase, siTailwindcss, siTestinglibrary, siTypescript, siVercel, siVite, siVitest, siZod,
+  type SimpleIcon,
+} from "simple-icons";
+import { compromiso, educacion, experiencia, otros, persona, proyectos, soporte, tecnologias, type Proyecto } from "./datos";
+
+const logos: Record<string, SimpleIcon> = {
+  JavaScript: siJavascript, TypeScript: siTypescript, Python: siPython, HTML: siHtml5, CSS: siCss,
+  React: siReact, Redux: siRedux, "Next.js": siNextdotjs, "Tailwind CSS": siTailwindcss, Vite: siVite,
+  Supabase: siSupabase, PostgreSQL: siPostgresql, "Node.js": siNodedotjs, Zod: siZod, PWA: siPwa,
+  Vitest: siVitest, "Testing Library": siTestinglibrary, Git: siGit, GitHub: siGithub, "GitHub Actions": siGithubactions, Vercel: siVercel,
+};
 
 const wa = `https://wa.me/${persona.whatsapp}?text=${encodeURIComponent("Hola Orlando, vi tu portafolio y quiero hablar contigo.")}`;
 const sinProtocolo = (url: string) => url.replace(/^https?:\/\//, "");
@@ -25,12 +38,14 @@ export function App() {
         </div>
       </header>
 
+      <Puntos />
       <main id="contenido">
         <Portada />
+        <Compromiso />
         <section id="proyectos" className="seccion marco" aria-labelledby="t-proyectos">
           <div className="seccion__cabeza">
             <h2 id="t-proyectos">Proyectos</h2>
-            <p>Todos están publicados: puedes abrirlos, crear una cuenta y probarlos. El código de cada uno está en GitHub.</p>
+            <p>El primero lo hice para una empresa y es privado. Los demás están publicados: puedes abrirlos, crear una cuenta y probarlos, y el código de cada uno está en GitHub.</p>
           </div>
           <div className="proyectos">
             {proyectos.map((p, i) => (
@@ -55,7 +70,6 @@ export function App() {
           </div>
         </section>
 
-        <CasoReal />
         <Experiencia />
         <Habilidades />
         <Contacto />
@@ -75,6 +89,50 @@ export function App() {
   );
 }
 
+const secciones = [
+  { id: "inicio", nombre: "Inicio" },
+  { id: "compromiso", nombre: "Mi compromiso" },
+  { id: "proyectos", nombre: "Proyectos" },
+  { id: "experiencia", nombre: "Experiencia" },
+  { id: "tecnologias", nombre: "Con qué trabajo" },
+  { id: "contacto", nombre: "Contacto" },
+];
+
+// Punticos a la derecha para saltar a cada sección
+function Puntos() {
+  const [actual, setActual] = useState("inicio");
+  useEffect(() => {
+    const vistas = new Map<string, number>();
+    const obs = new IntersectionObserver(
+      (entradas) => {
+        for (const e of entradas) vistas.set(e.target.id, e.intersectionRatio);
+        const mejor = [...vistas.entries()].sort((a, b) => b[1] - a[1])[0];
+        if (mejor && mejor[1] > 0) setActual(mejor[0]);
+      },
+      { threshold: [0, 0.15, 0.3, 0.5, 0.75, 1], rootMargin: "-30% 0px -30% 0px" },
+    );
+    for (const { id } of secciones) {
+      const el = document.getElementById(id);
+      if (el) obs.observe(el);
+    }
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <nav className="puntos" aria-label="Ir a una sección">
+      <ul>
+        {secciones.map((x) => (
+          <li key={x.id}>
+            <a href={`#${x.id}`} aria-current={actual === x.id ? "true" : undefined}>
+              <span className="puntos__nombre">{x.nombre}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
 function Portada() {
   return (
     <section id="inicio" className="portada">
@@ -85,7 +143,7 @@ function Portada() {
           </h1>
           <p className="portada__rol">Desarrollo web y soporte técnico</p>
           <p className="portada__intro">
-            Estudio Ingeniería de Sistemas en Barranquilla. Hago aplicaciones web completas, con cuentas de usuario, base de datos, seguridad y pruebas, y las publico para que cualquiera las use. Una de ellas la usa a diario una empresa para manejar su producción.
+            Estudio Ingeniería de Sistemas en Barranquilla y me gusta construir aplicaciones web de principio a fin: lo que ve la persona, la base de datos y la publicación. Busco una oportunidad en desarrollo web o soporte técnico donde pueda seguir aprendiendo y aportar desde el primer día.
           </p>
           <div className="portada__acciones">
             <a className="boton" href="#proyectos">
@@ -106,7 +164,7 @@ function Portada() {
             </div>
             <div>
               <dt>Publicado</dt>
-              <dd>{proyectos.length} apps en vivo</dd>
+              <dd>{proyectos.filter((p) => p.enVivo).length} apps en vivo</dd>
             </div>
           </dl>
         </div>
@@ -122,17 +180,15 @@ function TarjetaProyecto({ p, invertida }: { p: Proyecto; invertida: boolean }) 
   return (
     <article className={`proyecto ${invertida ? "proyecto--invertida" : ""}`} aria-labelledby={`p-${p.id}`}>
       <div className="proyecto__vista">
-        <a className="ventana" href={p.enVivo} target="_blank" rel="noopener" aria-label={`Abrir ${p.nombre} en vivo`}>
-          <span className="ventana__barra" aria-hidden="true">
-            <span className="ventana__puntos">
-              <i />
-              <i />
-              <i />
-            </span>
-            <span className="ventana__url">{sinProtocolo(p.enVivo)}</span>
-          </span>
-          <img src={p.imagen} alt={`Pantalla de ${p.nombre}`} width="1280" height="800" loading="lazy" />
-        </a>
+        {p.enVivo ? (
+          <a className="ventana" href={p.enVivo} target="_blank" rel="noopener" aria-label={`Abrir ${p.nombre} en vivo`}>
+            <Ventana p={p} />
+          </a>
+        ) : (
+          <div className="ventana">
+            <Ventana p={p} />
+          </div>
+        )}
         {p.movil && <img className="celular" src={p.movil} alt={`${p.nombre} en el celular`} width="360" height="720" loading="lazy" />}
       </div>
       <div className="proyecto__texto">
@@ -151,42 +207,38 @@ function TarjetaProyecto({ p, invertida }: { p: Proyecto; invertida: boolean }) 
             <li key={s}>{s}</li>
           ))}
         </ul>
-        <div className="proyecto__enlaces">
-          <a className="boton boton--chico" href={p.enVivo} target="_blank" rel="noopener">
-            Probar en vivo
-          </a>
-          <a className="enlace" href={p.codigo} target="_blank" rel="noopener">
-            Ver código en GitHub
-          </a>
-        </div>
+        {p.enVivo && p.codigo ? (
+          <div className="proyecto__enlaces">
+            <a className="boton boton--chico" href={p.enVivo} target="_blank" rel="noopener">
+              Probar en vivo
+            </a>
+            <a className="enlace" href={p.codigo} target="_blank" rel="noopener">
+              Ver código en GitHub
+            </a>
+          </div>
+        ) : (
+          <p className="proyecto__privado">Es software interno de la empresa, así que no tiene enlace público. Las capturas usan datos de ejemplo.</p>
+        )}
       </div>
     </article>
   );
 }
 
-function CasoReal() {
+function Ventana({ p }: { p: Proyecto }) {
   return (
-    <section className="caso" aria-labelledby="t-caso">
-      <div className="marco caso__dentro">
-        <div>
-          <p className="caso__empresa">
-            Para un cliente: {casoReal.empresa}, {casoReal.anios}
-          </p>
-          <h2 id="t-caso">{casoReal.titulo}</h2>
-          <p className="caso__intro">{casoReal.intro}</p>
-          <ul className="chips chips--claro" aria-label="Tecnologías">
-            {casoReal.stack.map((s) => (
-              <li key={s}>{s}</li>
-            ))}
-          </ul>
-        </div>
-        <ul className="caso__lista">
-          {casoReal.hice.map((x) => (
-            <li key={x}>{x}</li>
-          ))}
-        </ul>
-      </div>
-    </section>
+    <>
+      <span className="ventana__barra" aria-hidden="true">
+        <span className="ventana__puntos">
+          <i />
+          <i />
+          <i />
+        </span>
+        <span className="ventana__url" data-privado={!p.enVivo || undefined}>
+          {p.enVivo ? sinProtocolo(p.enVivo) : p.direccion}
+        </span>
+      </span>
+      <img src={p.imagen} alt={`Pantalla de ${p.nombre}`} width="1280" height="800" loading="lazy" />
+    </>
   );
 }
 
@@ -231,24 +283,60 @@ function Experiencia() {
   );
 }
 
+function Compromiso() {
+  return (
+    <section id="compromiso" className="compromiso" aria-labelledby="t-compromiso">
+      <div className="marco compromiso__dentro">
+        <h2 id="t-compromiso">Mi compromiso</h2>
+        <ul>
+          {compromiso.map((c) => (
+            <li key={c.titulo}>
+              <h3>{c.titulo}</h3>
+              <p>{c.texto}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
 function Habilidades() {
   return (
-    <section className="seccion marco" aria-labelledby="t-hab">
+    <section id="tecnologias" className="seccion marco" aria-labelledby="t-hab">
       <div className="seccion__cabeza">
         <h2 id="t-hab">Con qué trabajo</h2>
-        <p>Lo que he usado en los proyectos de arriba, no una lista de cursos.</p>
+        <p>Los lenguajes y herramientas que uso en los proyectos de arriba.</p>
       </div>
-      <div className="habilidades">
-        {habilidades.map((h) => (
-          <div key={h.area} className="habilidad">
-            <h3>{h.area}</h3>
+      <div className="tecnologias">
+        {tecnologias.map((g) => (
+          <div key={g.area} className="tecnologias__grupo">
+            <h3>{g.area}</h3>
             <ul>
-              {h.items.map((i) => (
-                <li key={i}>{i}</li>
-              ))}
+              {g.items.map((nombre) => {
+                const logo = logos[nombre];
+                return (
+                  <li key={nombre} className="tec">
+                    {logo && (
+                      <svg viewBox="0 0 24 24" aria-hidden="true" style={{ color: `#${logo.hex}` }} data-oscuro={["000000", "181717"].includes(logo.hex) || undefined}>
+                        <path d={logo.path} />
+                      </svg>
+                    )}
+                    {nombre}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))}
+        <div className="tecnologias__grupo tecnologias__grupo--ancho">
+          <h3>Soporte técnico</h3>
+          <ul className="tecnologias__texto">
+            {soporte.map((x) => (
+              <li key={x}>{x}</li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

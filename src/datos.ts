@@ -19,13 +19,34 @@ export interface Proyecto {
   problema: string;
   puntos: string[];
   stack: string[];
-  enVivo: string;
-  codigo: string;
+  /** Sin enlaces cuando es software privado de un cliente. */
+  enVivo?: string;
+  codigo?: string;
+  /** Dirección que se muestra en la barra de la ventana cuando no hay enlace público. */
+  direccion?: string;
+  cliente?: string;
   imagen: string;
   movil?: string;
 }
 
 export const proyectos: Proyecto[] = [
+  {
+    id: "produccion",
+    anios: "2025 – 2026",
+    nombre: "Software de producción",
+    cliente: "REG Marketing S.A.S.",
+    queEs: "Para un cliente: REG Marketing S.A.S.",
+    problema: "Los pedidos se coordinaban a mano entre la oficina y la planta. Ahora cada orden se sigue por etapas desde las tablets, y la empresa lo usa todos los días.",
+    puntos: [
+      "Cada orden muestra en qué área va (corte, sublimación, confección, despacho…) y el avance se ve al mismo tiempo en la oficina y en la planta.",
+      "Versión 2: dos tablets ya no se pisan el avance, editar una orden no borra lo hecho y avisa cuando se va el internet.",
+      "Reportes del mes y órdenes en PDF, gráficas de cómo va la producción y filtros para encontrar pedidos.",
+    ],
+    stack: ["HTML", "CSS", "JavaScript", "Supabase"],
+    direccion: "Software interno de la empresa",
+    imagen: "/img/produccion.webp",
+    movil: "/img/produccion-movil.webp",
+  },
   {
     id: "cuadre",
     anios: "2025 – 2026",
@@ -140,20 +161,6 @@ export const otros = [
   },
 ];
 
-export const casoReal = {
-  empresa: "REG Marketing S.A.S.",
-  titulo: "Software de producción en uso diario",
-  anios: "2025 – 2026",
-  intro:
-    "En REG Marketing los pedidos se coordinaban a mano entre oficina y planta. Hice una aplicación web interna para seguir cada orden por sus etapas de producción, y hoy la usan a diario en las tablets de la planta.",
-  hice: [
-    "Seguimiento de cada orden por etapa, con el avance visible para oficina y planta al mismo tiempo.",
-    "Versión 2: arreglé que dos tablets se pisaran el avance, que editar una orden borrara lo hecho y los avisos cuando se va el internet.",
-    "Reportes en PDF de cada orden y del mes, gráficas de cómo va la producción y filtros para encontrar pedidos.",
-  ],
-  stack: ["HTML", "CSS", "JavaScript", "Supabase"],
-};
-
 export interface Trabajo {
   cargo: string;
   empresa: string;
@@ -192,24 +199,30 @@ export const experiencia: Trabajo[] = [
   },
 ];
 
-export const habilidades = [
+export const compromiso = [
   {
-    area: "Desarrollo web",
-    items: ["React", "TypeScript", "JavaScript", "Redux Toolkit y RTK Query", "Next.js", "HTML y CSS", "Tailwind CSS", "Diseño adaptable y accesible"],
+    titulo: "Responsable con lo que me encargan",
+    texto: "Cumplo los tiempos que acuerdo y, si algo no sale bien, lo reviso hasta que quede funcionando.",
   },
   {
-    area: "Datos y servidor",
-    items: ["Supabase (PostgreSQL, Auth, RLS)", "Edge Functions", "Node.js", "APIs REST", "Validación con Zod", "Apps que funcionan sin internet (PWA)"],
+    titulo: "Siempre aprendiendo",
+    texto: "Cada proyecto me ha llevado a aprender algo nuevo. Me gusta preguntar y entender por qué funcionan las cosas, no solo copiar la solución.",
   },
   {
-    area: "Calidad y entrega",
-    items: ["Pruebas con Vitest y Testing Library", "Git y GitHub", "GitHub Actions", "Despliegue en Vercel"],
-  },
-  {
-    area: "Soporte técnico",
-    items: ["Windows y redes", "Scripts de PowerShell", "Mesa de ayuda y SLA", "Documentación de procedimientos", "Atención bilingüe"],
+    titulo: "Cuidadoso con la información",
+    texto: "En atención al cliente manejé datos de pacientes y de transferencias de dinero, y trato con la misma discreción los datos en lo que construyo.",
   },
 ];
+
+/** Los nombres coinciden con los íconos de simple-icons (ver Tecnologias en App.tsx). */
+export const tecnologias = [
+  { area: "Lenguajes", items: ["JavaScript", "TypeScript", "Python", "HTML", "CSS"] },
+  { area: "Frontend", items: ["React", "Redux", "Next.js", "Tailwind CSS", "Vite"] },
+  { area: "Datos y servidor", items: ["Supabase", "PostgreSQL", "Node.js", "Zod", "PWA"] },
+  { area: "Pruebas y publicación", items: ["Vitest", "Testing Library", "Git", "GitHub", "GitHub Actions", "Vercel"] },
+];
+
+export const soporte = ["Windows y redes", "Scripts de PowerShell", "Mesa de ayuda y SLA", "Documentación de procedimientos", "Atención en inglés y español"];
 
 export const educacion = [
   { titulo: "Ingeniería de Sistemas", lugar: "Universidad de la Costa (CUC)", fechas: "2023 – actualidad" },
