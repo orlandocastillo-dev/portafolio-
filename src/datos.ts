@@ -48,6 +48,24 @@ export const proyectos: Proyecto[] = [
     movil: "/img/produccion-movil.webp",
   },
   {
+    id: "alfabeto",
+    anios: "2025 – 2026",
+    nombre: "Alfabeto LSC",
+    queEs: "Machine learning: lengua de señas con la cámara",
+    problema: "Reconocer con la cámara las letras del alfabeto de la Lengua de Señas Colombiana y deletrear palabras, sin que la imagen salga del celular.",
+    puntos: [
+      "Recogí mis propios datos: una página para grabar cada letra que guarda solo los 21 puntos de la mano, nunca imagen ni video.",
+      "Entrené una red neuronal en Python con scikit-learn. Con grabaciones que no vio acierta el 94 %.",
+      "El modelo corre en el navegador, con una prueba que revisa que dé lo mismo que en Python.",
+      "Las señas siguen el alfabeto oficial del Instituto Caro y Cuervo y el INSOR. Por ahora reconoce las 21 letras que se hacen con la mano quieta.",
+    ],
+    stack: ["Python", "scikit-learn", "MediaPipe", "React", "TypeScript", "Supabase"],
+    enVivo: "https://alfabeto-lsc.vercel.app",
+    codigo: "https://github.com/orlandocastillo-dev/alfabeto-lsc",
+    imagen: "/img/alfabeto.webp",
+    movil: "/img/alfabeto-movil.webp",
+  },
+  {
     id: "cuadre",
     anios: "2025 – 2026",
     nombre: "Cuadre",
@@ -220,12 +238,13 @@ export const tecnologias = [
   { area: "Frontend", items: ["React", "Redux", "Next.js", "Tailwind CSS", "Vite"] },
   { area: "Datos y servidor", items: ["Supabase", "PostgreSQL", "Node.js", "Zod", "PWA"] },
   { area: "Pruebas y publicación", items: ["Vitest", "Testing Library", "Git", "GitHub", "GitHub Actions", "Vercel"] },
+  { area: "Machine learning", items: ["scikit-learn", "MediaPipe", "NumPy"] },
 ];
 
 export const soporte = ["Windows y redes", "Scripts de PowerShell", "Mesa de ayuda y SLA", "Documentación de procedimientos", "Atención en inglés y español"];
 
 export const educacion = [
-  { titulo: "Ingeniería de Sistemas", lugar: "Universidad de la Costa (CUC)", fechas: "2023 – actualidad" },
+  { titulo: "Ingeniería de Sistemas", lugar: "Universidad de la Costa (CUC)", fechas: "2024 – actualidad" },
   { titulo: "Programa de inglés, nivel 6 (finalizado)", lugar: "Universidad del Atlántico", fechas: "" },
   { titulo: "Bachiller con profundización en pedagogía", lugar: "Escuela Normal Superior del Distrito de Barranquilla", fechas: "2023" },
 ];

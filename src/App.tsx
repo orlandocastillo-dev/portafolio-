@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   siCss, siGit, siGithub, siGithubactions, siHtml5, siJavascript, siNextdotjs, siNodedotjs, siPostgresql, siPwa, siPython,
-  siReact, siRedux, siSupabase, siTailwindcss, siTestinglibrary, siTypescript, siVercel, siVite, siVitest, siZod,
+  siReact, siRedux, siSupabase, siTailwindcss, siTestinglibrary, siTypescript, siVercel, siVite, siVitest, siZod, siScikitlearn, siMediapipe, siNumpy,
   type SimpleIcon,
 } from "simple-icons";
 import { compromiso, educacion, experiencia, otros, persona, proyectos, soporte, tecnologias, type Proyecto } from "./datos";
@@ -9,7 +9,7 @@ import { compromiso, educacion, experiencia, otros, persona, proyectos, soporte,
 const logos: Record<string, SimpleIcon> = {
   JavaScript: siJavascript, TypeScript: siTypescript, Python: siPython, HTML: siHtml5, CSS: siCss,
   React: siReact, Redux: siRedux, "Next.js": siNextdotjs, "Tailwind CSS": siTailwindcss, Vite: siVite,
-  Supabase: siSupabase, PostgreSQL: siPostgresql, "Node.js": siNodedotjs, Zod: siZod, PWA: siPwa,
+  Supabase: siSupabase, PostgreSQL: siPostgresql, "Node.js": siNodedotjs, Zod: siZod, PWA: siPwa, "scikit-learn": siScikitlearn, MediaPipe: siMediapipe, NumPy: siNumpy,
   Vitest: siVitest, "Testing Library": siTestinglibrary, Git: siGit, GitHub: siGithub, "GitHub Actions": siGithubactions, Vercel: siVercel,
 };
 
