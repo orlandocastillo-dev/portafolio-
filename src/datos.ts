@@ -9,6 +9,7 @@ export const persona = {
   telefono: "+57 323 620 5415",
   github: "https://github.com/orlandocastillo-dev",
   hojaDeVida: "/hoja-de-vida-orlando-castillo.pdf",
+  resume: "/resume-orlando-castillo.pdf",
 };
 
 export interface Proyecto {
@@ -68,7 +69,7 @@ export const proyectos: Proyecto[] = [
   {
     id: "cuadre",
     anios: "2025 – 2026",
-    nombre: "Cuadre",
+    nombre: "Qadre",
     queEs: "Finanzas personales",
     problema: "Saber cuánta plata te queda para el resto del mes y en qué se te está yendo, con tus propios números.",
     puntos: [
@@ -78,7 +79,7 @@ export const proyectos: Proyecto[] = [
       "También se puede usar sin cuenta, con los datos guardados en el navegador.",
     ],
     stack: ["React 19", "TypeScript", "Redux Toolkit", "RTK Query", "Supabase", "Vitest"],
-    enVivo: "https://cuadre-lake.vercel.app",
+    enVivo: "https://qadre-app.vercel.app",
     codigo: "https://github.com/orlandocastillo-dev/cuadre",
     imagen: "/img/cuadre.webp",
     movil: "/img/cuadre-movil.webp",
@@ -86,7 +87,7 @@ export const proyectos: Proyecto[] = [
   {
     id: "surtido",
     anios: "2025 – 2026",
-    nombre: "Surtido",
+    nombre: "Surti2",
     queEs: "Punto de venta para tiendas de barrio",
     problema: "Registrar ventas, llevar el inventario y el cuaderno del fiado desde el celular, aunque se caiga el internet.",
     puntos: [
@@ -96,7 +97,7 @@ export const proyectos: Proyecto[] = [
       "Se instala en el celular como una app (PWA).",
     ],
     stack: ["React 19", "TypeScript", "Redux Toolkit", "Supabase", "Edge Functions", "PWA"],
-    enVivo: "https://surtido-app-tan.vercel.app",
+    enVivo: "https://surti2.vercel.app",
     codigo: "https://github.com/orlandocastillo-dev/surtido-app",
     imagen: "/img/surtido.webp",
     movil: "/img/surtido-movil.webp",
@@ -171,8 +172,8 @@ export const otros = [
     enlaceTexto: "Ver guías",
   },
   {
-    nombre: "Página de Surtido",
-    texto: "La presentación del producto, hecha sin frameworks: modo oscuro, animación de una venta y diseño adaptable.",
+    nombre: "Página de Surti2",
+    texto: "La presentación del producto, hecha sin frameworks: una venta como se ve en la app, el día de la tienda hora por hora y diseño adaptable.",
     stack: ["HTML", "CSS", "JavaScript"],
     enlace: "https://github.com/orlandocastillo-dev/surtido-landing",
     enlaceTexto: "Ver código",

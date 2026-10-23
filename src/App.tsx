@@ -367,6 +367,11 @@ function Contacto() {
               Hoja de vida en PDF
             </a>
           </li>
+          <li>
+            <a href={persona.resume} download>
+              Resume in English (PDF)
+            </a>
+          </li>
         </ul>
       </div>
     </section>
