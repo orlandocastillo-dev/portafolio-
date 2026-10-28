@@ -68,7 +68,7 @@ export const proyectos: Proyecto[] = [
   },
   {
     id: "cupo",
-    anios: "2026",
+    anios: "2025 – 2026",
     nombre: "Cupo",
     queEs: "Reservas en línea en AWS",
     problema: "Que los clientes de una barbería o un consultorio aparten su hora solos, sin escribir por WhatsApp y sin que dos personas queden en la misma hora.",
