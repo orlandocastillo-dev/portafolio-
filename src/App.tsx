@@ -47,9 +47,12 @@ export function App() {
             <h2 id="t-proyectos">Proyectos</h2>
             <p>El primero lo hice para una empresa y es privado. Los demás están publicados: puedes abrirlos, crear una cuenta y probarlos, y el código de cada uno está en GitHub.</p>
           </div>
+          <p className="deslizar" aria-hidden="true">
+            Desliza para ver los {proyectos.length} proyectos →
+          </p>
           <div className="proyectos">
             {proyectos.map((p, i) => (
-              <TarjetaProyecto key={p.id} p={p} invertida={i % 2 === 1} />
+              <TarjetaProyecto key={p.id} p={p} destacada={i === 0} />
             ))}
           </div>
           <div className="otros" aria-label="Otros proyectos">
@@ -176,10 +179,11 @@ function Portada() {
   );
 }
 
-function TarjetaProyecto({ p, invertida }: { p: Proyecto; invertida: boolean }) {
+// Cada proyecto en una tarjeta: lo esencial a la vista y lo técnico al tocar
+function TarjetaProyecto({ p, destacada }: { p: Proyecto; destacada: boolean }) {
   return (
-    <article className={`proyecto ${invertida ? "proyecto--invertida" : ""}`} aria-labelledby={`p-${p.id}`}>
-      <div className="proyecto__vista">
+    <article className={`pcard ${destacada ? "pcard--destacada" : ""}`} aria-labelledby={`p-${p.id}`}>
+      <div className="pcard__vista">
         {p.enVivo ? (
           <a className="ventana" href={p.enVivo} target="_blank" rel="noopener" aria-label={`Abrir ${p.nombre} en vivo`}>
             <Ventana p={p} />
@@ -191,33 +195,36 @@ function TarjetaProyecto({ p, invertida }: { p: Proyecto; invertida: boolean }) 
         )}
         {p.movil && <img className="celular" src={p.movil} alt={`${p.nombre} en el celular`} width="360" height="720" loading="lazy" />}
       </div>
-      <div className="proyecto__texto">
+      <div className="pcard__cuerpo">
         <p className="proyecto__que">
           {p.queEs}, {p.anios}
         </p>
         <h3 id={`p-${p.id}`}>{p.nombre}</h3>
-        <p className="proyecto__problema">{p.problema}</p>
-        <ul className="proyecto__puntos">
-          {p.puntos.map((x) => (
-            <li key={x}>{x}</li>
-          ))}
-        </ul>
+        <p className="pcard__problema">{p.problema}</p>
         <ul className="chips" aria-label="Tecnologías">
           {p.stack.map((s) => (
             <li key={s}>{s}</li>
           ))}
         </ul>
+        <details className="pcard__mas">
+          <summary>Ver lo técnico</summary>
+          <ul className="proyecto__puntos">
+            {p.puntos.map((x) => (
+              <li key={x}>{x}</li>
+            ))}
+          </ul>
+        </details>
         {p.enVivo && p.codigo ? (
           <div className="proyecto__enlaces">
             <a className="boton boton--chico" href={p.enVivo} target="_blank" rel="noopener">
               Probar en vivo
             </a>
             <a className="enlace" href={p.codigo} target="_blank" rel="noopener">
-              Ver código en GitHub
+              Código en GitHub
             </a>
           </div>
         ) : (
-          <p className="proyecto__privado">Es software interno de la empresa, así que no tiene enlace público. Las capturas usan datos de ejemplo.</p>
+          <p className="proyecto__privado">Software interno de la empresa, sin enlace público. Las capturas usan datos de ejemplo.</p>
         )}
       </div>
     </article>
@@ -249,7 +256,8 @@ function Experiencia() {
         <h2 id="t-exp">Experiencia</h2>
         <p>Trabajos recientes, del más nuevo al más antiguo.</p>
       </div>
-      <ol className="linea">
+      <div className="exp-grid">
+        <ol className="linea">
         {experiencia.map((t) => (
           <li key={t.empresa} className="linea__item">
             <p className="linea__fechas">{t.fechas}</p>
@@ -278,6 +286,7 @@ function Experiencia() {
             </li>
           ))}
         </ul>
+      </div>
       </div>
     </section>
   );
