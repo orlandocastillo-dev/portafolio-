@@ -189,13 +189,6 @@ export const otros = [
     enlace: "https://github.com/orlandocastillo-dev/guias-soporte-it",
     enlaceTexto: "Ver guías",
   },
-  {
-    nombre: "Página de Surti2",
-    texto: "La presentación del producto, hecha sin frameworks: una venta como se ve en la app, el día de la tienda hora por hora y diseño adaptable.",
-    stack: ["HTML", "CSS", "JavaScript"],
-    enlace: "https://github.com/orlandocastillo-dev/surtido-landing",
-    enlaceTexto: "Ver código",
-  },
 ];
 
 export interface Trabajo {
