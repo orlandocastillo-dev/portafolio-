@@ -17,6 +17,7 @@ const wa = `https://wa.me/${persona.whatsapp}?text=${encodeURIComponent("Hola Or
 const sinProtocolo = (url: string) => url.replace(/^https?:\/\//, "");
 
 export function App() {
+  const actual = useSeccionActual();
   return (
     <>
       <a className="saltar" href="#contenido">
@@ -27,10 +28,17 @@ export function App() {
           <a className="barra__nombre" href="#inicio">
             Orlando Castillo
           </a>
-          <nav aria-label="Secciones">
-            <a href="#proyectos">Proyectos</a>
-            <a href="#experiencia">Experiencia</a>
-            <a href="#contacto">Contacto</a>
+          <nav className="barra__nav" aria-label="Secciones">
+            {[
+              ["proyectos", "Proyectos"],
+              ["experiencia", "Experiencia"],
+              ["tecnologias", "Con qué trabajo"],
+              ["contacto", "Contacto"],
+            ].map(([id, nombre]) => (
+              <a key={id} href={`#${id}`} aria-current={actual === id ? "true" : undefined}>
+                {nombre}
+              </a>
+            ))}
           </nav>
           <a className="boton boton--borde boton--chico" href={persona.hojaDeVida} download>
             Hoja de vida
@@ -38,7 +46,7 @@ export function App() {
         </div>
       </header>
 
-      <Puntos />
+      <Puntos actual={actual} />
       <main id="contenido">
         <Portada />
         <Compromiso />
@@ -98,8 +106,8 @@ const secciones = [
   { id: "contacto", nombre: "Contacto" },
 ];
 
-// Punticos a la derecha para saltar a cada sección
-function Puntos() {
+// En qué sección va la persona, para marcarla arriba y en los punticos
+function useSeccionActual() {
   const [actual, setActual] = useState("inicio");
   useEffect(() => {
     const vistas = new Map<string, number>();
@@ -117,7 +125,18 @@ function Puntos() {
     }
     return () => obs.disconnect();
   }, []);
+  // En el celular la fila de botones se corre sola hasta la sección actual
+  useEffect(() => {
+    // Solo se mueve la fila (scrollIntoView frenaría el desplazamiento de la página)
+    const nav = document.querySelector<HTMLElement>(".barra__nav");
+    const boton = nav?.querySelector<HTMLElement>("a[aria-current]");
+    if (nav && boton && nav.scrollWidth > nav.clientWidth) nav.scrollTo({ left: boton.offsetLeft - 16, behavior: "smooth" });
+  }, [actual]);
+  return actual;
+}
 
+// Punticos a la derecha para saltar a cada sección
+function Puntos({ actual }: { actual: string }) {
   return (
     <nav className="puntos" aria-label="Ir a una sección">
       <ul>
